@@ -7,10 +7,8 @@ class MergeSort{
         System.out.println(Arrays.toString(arr));
     }
 
-    public static int[] merge(int[] a1, int[] a2){
-        int[] ans = new int[a1.length+a2.length];
-        int[] arr1 = a1.length<a2.length?a1:a2;
-        int[] arr2 = a1.length>=a2.length?a1:a2;
+    public static int[] merge(int[] arr1, int[] arr2){
+        int[] ans = new int[arr1.length+arr2.length];
         int i = 0;
         int j = 0;
         int count=0;
