@@ -5,7 +5,7 @@ class MazePrintPath{
     private static ArrayList<String> paths = new ArrayList<>(); 
 
     public static void main(String[] args) {
-        buildPaths(3, 4, new String());
+        buildAllPaths(3, 3, new String());
         System.err.println(paths);
     }
 
@@ -24,4 +24,25 @@ class MazePrintPath{
             buildPaths(r, c-1, path+"R");
         }
     }
+
+    private static void buildAllPaths(int r, int c, String path){
+        if (r==1&&c == 1){
+            paths.add(path);
+            return;
+        }
+
+        if (r>1 && c>1){
+            buildAllPaths(r-1, c-1, path+"(DAG)");
+        }
+        //traverse row
+        if (r>1){
+            buildAllPaths(r-1, c, path+"D");
+        }
+
+        //traverse col
+        if(c>1){
+            buildAllPaths(r, c-1, path+"R");
+        }
+    }
+
 }
