@@ -15,6 +15,7 @@ class Permutations{
 
         int times = p.length()+1;
         for (int i=0; i<times; i++){
+            @SuppressWarnings("RedundantStringConstructorCall")
             String current = new String(p);
             if (p.length()==0){
                 current += u.charAt(0);
