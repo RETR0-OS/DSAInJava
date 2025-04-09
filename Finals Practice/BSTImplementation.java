@@ -5,15 +5,20 @@ import java.util.NoSuchElementException;
 public class BSTImplementation{
     public static void main(String[] args){
         BinSearchTree<Integer> tree = new BinSearchTree<>();
-        tree.add(10);
-        tree.add(5);
+        tree.add(15);
+        tree.add(3);
         tree.add(20);
-        tree.add(1);
+        tree.add(4);
+        tree.add(10);
+        tree.add(7);
+        tree.add(11);
+        tree.add(5);
+        tree.add(8);
         tree.printInOrder();
-        System.out.println(tree.search(100));
-        tree.printPreOrder();
-        tree.printPostOrder();
-        tree.remove(100);
+        System.out.println(tree.search(3));
+        // tree.printInOrder();
+        // tree.printPostOrder();
+        tree.remove(3);
         tree.printInOrder();
     }
 }
@@ -155,7 +160,6 @@ class BinSearchTree<E extends Comparable<E>>{
             throw new NoSuchElementException();
         }
         Node<E> pNode = findParent(e, this.root, null);
-        System.out.println("Parent is: " + pNode.data);
         Node<E> rNode = null;
         if (e.compareTo(pNode.data) < 0){
             rNode = pNode.left;
@@ -165,7 +169,14 @@ class BinSearchTree<E extends Comparable<E>>{
         }
 
         if (rNode.left != null && rNode.right != null){
-            // two children;
+            Node<E> cur = rNode.right;
+            while(cur.left != null){
+                cur = cur.left;
+            }
+            E remData = rNode.data;
+            rNode.data = cur.data;
+            cur.left = null;
+            return remData;
         }
         else if (rNode.left != null ^ rNode.right != null){
             if(e.compareTo(pNode.data) < 0){
