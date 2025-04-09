@@ -8,6 +8,8 @@ public class BSTImplementation{
         tree.add(1);
         tree.printInOrder();
         System.out.println(tree.search(100));
+        tree.printPreOrder();
+        tree.printPostOrder();
     }
 }
 
@@ -65,13 +67,13 @@ class BinSearchTree<E extends Comparable<E>>{
         System.out.println();
     }
 
-    private boolean search(Node<E> node, E element){
+    private Node<E> search(Node<E> node, E element){
         Node<E> cur = node;
         if (cur == null){
-            return false;
+            return null;
         }
         else if(cur.data.equals(element)){
-            return true;
+            return cur;
         }
         else if(cur.data.compareTo(element) < 0){
             return search(cur.right, element);
@@ -82,9 +84,48 @@ class BinSearchTree<E extends Comparable<E>>{
     }
 
     public boolean search(E element){
-        return search(this.root, element);
+        Node<E> node = search(this.root, element);
+        if (node == null){
+            return false;
+        }
+        return true;
     }
 
+    private void printPreOrder(Node<E> cur){
+        if (cur == null){
+            return;
+        }
+        System.out.print(" " + cur.data + " ");
+        if (cur.left != null){
+            printPreOrder(cur.left);
+        }
+        if(cur.right != null){
+            printPreOrder(cur.right);
+        }
+    }
+    
+    public void printPreOrder(){
+        printPreOrder(this.root);
+        System.out.println();
+    }
+
+    private void printPostOrder(Node<E> cur){
+        if (cur == null){
+            return;
+        }
+        if (cur.left != null){
+            printPostOrder(cur.left);
+        }
+        if(cur.right != null){
+            printPostOrder(cur.right);
+        }
+        System.out.print(" " + cur.data + " ");
+    }
+
+    public void printPostOrder(){
+        printPostOrder(this.root);
+        System.out.println();
+    }
 
 }
 
