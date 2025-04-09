@@ -1,4 +1,7 @@
 
+import java.util.NoSuchElementException;
+
+
 public class BSTImplementation{
     public static void main(String[] args){
         BinSearchTree<Integer> tree = new BinSearchTree<>();
@@ -10,6 +13,8 @@ public class BSTImplementation{
         System.out.println(tree.search(100));
         tree.printPreOrder();
         tree.printPostOrder();
+        tree.remove(100);
+        tree.printInOrder();
     }
 }
 
@@ -85,10 +90,7 @@ class BinSearchTree<E extends Comparable<E>>{
 
     public boolean search(E element){
         Node<E> node = search(this.root, element);
-        if (node == null){
-            return false;
-        }
-        return true;
+        return node != null;
     }
 
     private void printPreOrder(Node<E> cur){
@@ -127,6 +129,72 @@ class BinSearchTree<E extends Comparable<E>>{
         System.out.println();
     }
 
+    private Node<E> findParent(E e, Node<E> n, Node<E> p){
+        Node<E> cur = n;
+        Node<E> parent = p;
+        if (cur == null){
+            throw new NoSuchElementException();
+        }
+        if (e.compareTo(cur.data) < 0){
+            parent = cur;
+            cur = cur.left;
+            return findParent(e, cur, parent);
+        }
+        else if(e.compareTo(cur.data) > 0){
+            parent = cur;
+            cur = cur.right;
+            return findParent(e, cur, parent);
+        }
+        else{
+            return parent;
+        }
+    }
+
+    public E remove(E e){
+        if(this.root == null){
+            throw new NoSuchElementException();
+        }
+        Node<E> pNode = findParent(e, this.root, null);
+        System.out.println("Parent is: " + pNode.data);
+        Node<E> rNode = null;
+        if (e.compareTo(pNode.data) < 0){
+            rNode = pNode.left;
+        }
+        else if (e.compareTo(pNode.data) > 0){
+            rNode = pNode.right;
+        }
+
+        if (rNode.left != null && rNode.right != null){
+            // two children;
+        }
+        else if (rNode.left != null ^ rNode.right != null){
+            if(e.compareTo(pNode.data) < 0){
+                if(rNode.left != null){
+                    pNode.left = rNode.left;
+                }
+                else{
+                    pNode.left = rNode.right;
+                }
+            }
+            else{
+                if(rNode.left != null){
+                    pNode.right = rNode.left;
+                }
+                else{
+                    pNode.right = rNode.right;
+                }
+            }
+        }
+        else{
+            if(e.compareTo(pNode.data) < 0){
+                pNode.left = null;
+            }
+            else{
+                pNode.right = null;
+            }
+        }
+        return rNode.data;
+    }
 }
 
 class Node<E extends Comparable<E>>{
