@@ -1,6 +1,7 @@
 
 import java.util.NoSuchElementException;
-
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class BSTImplementation{
     public static void main(String[] args){
@@ -20,6 +21,7 @@ public class BSTImplementation{
         // tree.printPostOrder();
         tree.remove(3);
         tree.printInOrder();
+        System.out.println(tree.BreadthFirstSearch(11));
     }
 }
 
@@ -91,6 +93,31 @@ class BinSearchTree<E extends Comparable<E>>{
         else{
             return search(cur.left, element);
         }
+    }
+
+    public boolean BreadthFirstSearch(E element){
+        return BreadthFirstSearch(this.root, element);
+    }
+
+    private boolean BreadthFirstSearch(Node<E> n, E element){
+        if (n==null){
+            return false;
+        }
+        Queue<Node<E>> nodesToVisit = new LinkedList<>();
+        nodesToVisit.add(n);
+        while (!nodesToVisit.isEmpty()){
+            Node<E> current = nodesToVisit.remove();
+            if (current.data.equals(element)){
+                return true;
+            }
+            if (current.left != null){
+                nodesToVisit.add(current.left);
+            }
+            if (current.right != null){
+                nodesToVisit.add(current.right);
+            }
+        }
+        return false;
     }
 
     public boolean search(E element){
