@@ -17,6 +17,8 @@ public class StackImplementation{
         s.pop();
         s.pop();
         s.print();
+        s.push(100);
+        s.print();
     }
 }
 
